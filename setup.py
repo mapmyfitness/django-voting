@@ -14,6 +14,18 @@ if version_tuple[2] is not None:
 else:
     version = "%d.%d" % version_tuple[:2]
 
+
+import sys
+
+if 'sdist' in sys.argv:
+    import mmf_release_tools
+    version = mmf_release_tools.generate_release_version(version, __file__)
+    mmf_release_tools.write_release_version(version)
+else:
+    with open("RELEASE-VERSION", "r") as f:
+        version = f.readlines()[0].strip()
+
+
 setup(
     name = 'django-voting',
     version = version,
